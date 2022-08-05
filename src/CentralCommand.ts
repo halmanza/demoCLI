@@ -13,7 +13,8 @@ export default class CentralCommand
 
   public static GetInstance (options: cliOptions): CentralCommand 
   {
-    if (CentralCommand.GenerateCentralCommand == null) {
+    if (CentralCommand.GenerateCentralCommand == null) 
+    {
       CentralCommand.GenerateCentralCommand = new CentralCommand(options);
 
       return CentralCommand.GenerateCentralCommand;
@@ -27,9 +28,13 @@ export default class CentralCommand
   public ProcessRequest (fileContent: string): void | string | ArrayBuffer 
   {
     if (this.CommandOptions.convertToBase64String) {
+      
       return utils.convertToBase64(fileContent, this.CommandOptions);
+
     } else if (this.CommandOptions.convertToBase64String) {
+
       return utils.convertToBinaryString(fileContent, this.CommandOptions);
+
     }
   }
 }
