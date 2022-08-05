@@ -7,6 +7,7 @@ A CLI Project that will attempt to create a useful utility for various conversio
 - String to binary string with added byte delimiter
 - Byte Array, UInt8Array decoded to string
 - Byte array, UInt8Array with delimiter to string
+- And many more... !
 
 ### Project Intentions
 The primary purpose is to work on producing a useful utility CLI for everyday user utilities. At the same time its an opportunity for me to learn more about producing a npm package. It would be great if something useful for multiple developers arose out of this project
