@@ -1,0 +1,17 @@
+#npmjs packages
+node_modules
+
+#logs
+npm-debug.log*
+
+#compiled_folder
+/build
+
+#vscode
+.vscode
+*.vscode
+
+#local_environment
+.env
+.DS_Store
+Thumbs.db
