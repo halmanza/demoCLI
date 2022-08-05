@@ -29,6 +29,7 @@
             "named": "always"
         }],
         "object-curly-newline":["error",{"multiline": true}],
-        "no-multi-spaces":["error",{"ignoreEOLComments": false}]
+        "no-multi-spaces":["error",{"ignoreEOLComments": false}],
+        "padded-blocks":"off"
     }
 }
