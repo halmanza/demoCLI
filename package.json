@@ -20,6 +20,6 @@
     "demo": "./build/index.js"
   },
   "scripts": {
-    "lint": "npx eslint **/*.ts --ignore-pattern node_modules/ --fix"
+    "lint": "npx eslint **/*.ts **/*.js --ignore-pattern node_modules/ --fix"
   }
 }

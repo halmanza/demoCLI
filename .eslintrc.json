@@ -30,6 +30,14 @@
         }],
         "object-curly-newline":["error",{"multiline": true}],
         "no-multi-spaces":["error",{"ignoreEOLComments": false}],
-        "padded-blocks":"off"
+        "padded-blocks":"off",
+        "no-void":"off",
+        "comma-dangle": ["error", {
+        "arrays": "never",
+        "objects": "never",
+        "imports": "never",
+        "exports": "never",
+        "functions": "never"
+    }]
     }
 }

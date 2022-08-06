@@ -1,34 +1,33 @@
 #!/usr/bin/env node
 import fs from "fs/promises";
 import { commandLineOptions, cliOptions } from "./commandLineOptions.js";
+import { argumentProcessor, cliArguments, createCLIArgumentsObject } from "./utils/argumentProcessing.js";
 import CentralCommand from "./CentralCommand.js";
 
 const fileName: string = process.argv[2];
-const optionsArgument: string = process.argv[3];
-const optionsAddedAttribute: string = process.argv[4];
+const argumentsObject:cliArguments = createCLIArgumentsObject(process.argv[3], process.argv[4]);
 
-try {
+try 
+{
   const file: Promise<string> = fs.readFile(fileName, { encoding: "utf-8" });
   const stringFromFile = await file;
-  const formattedSecondArgument: string = optionsAddedAttribute
-    ? `${optionsArgument.toLowerCase().trim()} ${optionsAddedAttribute
-        .toLowerCase()
-        .trim()}`
-    : optionsArgument.toLowerCase();
-
-  const options: cliOptions = commandLineOptions(formattedSecondArgument);
+  const formattedArguments = argumentProcessor(argumentsObject)
+  const options: cliOptions = commandLineOptions(formattedArguments);
   const commandCenter = CentralCommand.GetInstance(options);
 
-  const userRequestOutput = commandCenter.ProcessRequest(stringFromFile);
-  console.log(userRequestOutput);
-} catch (error: unknown) {
-  let message: string = "";
+  commandCenter.ProcessRequest(stringFromFile);
 
-  if (error instanceof Error) message = error.message;
+} 
+catch (error: unknown) 
+{
+  const message:string = error instanceof Error ? error.message : "";
 
-  if (message.includes("properties") && message.includes("undefined")) {
-    console.error("improper property flag.");
-  } else {
+  if (message.includes("properties") && message.includes("undefined")) 
+  {
+    console.error("improper flag. Please input a proper command or optional flag.");
+  } 
+  else 
+  {
     console.error(message);
   }
 }
