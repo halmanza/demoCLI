@@ -6,8 +6,7 @@ import { cliOptions } from "./commandLineOptions.js";
  * @param { cliOptions } options - options object with selected conversion actions.
  * @returns { string } returns a base64 encoded string with utf-16 formatting.
  */
-const convertToBase64 = (fileContent: string, options: cliOptions): string => 
-{
+const convertToBase64 = (fileContent: string, options: cliOptions): string => {
   if (!options.convertToBase64String) {
     throw new Error("Base64 option not chosen.");
   }
@@ -21,8 +20,10 @@ const convertToBase64 = (fileContent: string, options: cliOptions): string =>
  * @param { cliOptions } options - contains settings from CLI for converting values.
  * @returns - A string representation of binary content from Uint8Array.
  */
-const convertToBinaryString = (fileContent: string, options: cliOptions): string => 
-{
+const convertToBinaryString = (
+  fileContent: string,
+  options: cliOptions
+): string => {
   const encoder = new TextEncoder();
   const encodedStringArray = encoder.encode(fileContent);
 
@@ -39,8 +40,7 @@ const convertToBinaryString = (fileContent: string, options: cliOptions): string
  * @param fileContent - File content encoded in Uint8Array.
  * @returns new byte array with added empty byte delimiter.
  */
-const addDelimiter = (fileContent: Uint8Array): Uint8Array => 
-{
+const addDelimiter = (fileContent: Uint8Array): Uint8Array => {
   const byteUint8Array: Uint8Array = new Uint8Array(new ArrayBuffer(1));
   const appendedBuffer = new ArrayBuffer(
     fileContent.length + byteUint8Array.length
@@ -55,19 +55,17 @@ const addDelimiter = (fileContent: Uint8Array): Uint8Array =>
 
 /**
  * @description converts Uint8Array binary into a string representation.
- * @param { Uint8Array } typedArray 
- * @returns 
+ * @param { Uint8Array } typedArray
+ * @returns
  */
-const binaryStringRepresentation = (typedArray: Uint8Array): string => 
-{
+const binaryStringRepresentation = (typedArray: Uint8Array): string => {
   let storageString = "";
-  const view: DataView = new DataView(typedArray.buffer);
-
-  [...typedArray].forEach((item: number, index: number) => {
-    const addedString = (storageString += view.getUint8(index).toString(2));
-    return addedString;
+  
+  typedArray.forEach((item:number) => 
+  {
+    storageString += item.toString(2).padStart(8, "0") + " "
   });
-
+  
   return storageString;
 };
 
