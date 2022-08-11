@@ -65,8 +65,13 @@ const binaryStringRepresentation = (typedArray: Uint8Array): string => {
   {
     storageString += item.toString(2).padStart(8, "0") + " "
   });
-  
+
   return storageString;
 };
 
-export { convertToBase64, convertToBinaryString };
+const convertBinaryStringToUint8 = (binaryInput: string): Uint8Array =>
+{
+  return new TextEncoder().encode(binaryInput);
+}
+
+export { convertToBase64, convertToBinaryString, convertBinaryStringToUint8 };
