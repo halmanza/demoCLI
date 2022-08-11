@@ -17,9 +17,9 @@
     "typescript": "^4.7.4"
   },
   "bin": {
-    "demo": "./build/index.js"
+    "demo": "./build/index.js && npx eslint **/*.js --ignore-pattern node_modules/ --fix"
   },
   "scripts": {
-    "lint": "npx eslint **/*.ts **/*.js --ignore-pattern node_modules/ --fix"
+    "lint": "npx eslint **/*.ts --ignore-pattern node_modules/ --fix"
   }
 }

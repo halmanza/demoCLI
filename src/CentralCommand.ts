@@ -1,3 +1,4 @@
+import { mkdir } from "fs/promises";
 import { cliOptions } from "./commandLineOptions.js";
 import * as utils from "./conversionUtils.js";
 
@@ -52,6 +53,11 @@ export default class CentralCommand
     } else if (this.CommandOptions.convertToBinary) 
     {
       console.log(utils.convertToBinaryString(fileContent, this.CommandOptions));
+    }
+    else if (this.CommandOptions.convertToBinaryOutputStringFile)
+    {
+      mkdir("./build/convertedValues");
+      utils.convertToBinaryString(fileContent, this.CommandOptions);
     }
     else
     {

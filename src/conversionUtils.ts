@@ -1,4 +1,5 @@
 import { cliOptions } from "./commandLineOptions.js";
+import { createWriteStream } from "fs";
 
 /**
  * @Description Converts string from a file into a base64 string representation.
@@ -25,14 +26,14 @@ const convertToBinaryString = (
   options: cliOptions
 ): string => {
   const encoder = new TextEncoder();
-  const encodedStringArray = encoder.encode(fileContent);
+  const encodedStringArray = encoder.encode(fileContent.trim());
 
   if (options.addDelimiter) {
     const delimitedArray = addDelimiter(encodedStringArray);
-    return binaryStringRepresentation(delimitedArray);
+    return binaryStringRepresentation(delimitedArray, options);
   }
 
-  return binaryStringRepresentation(encodedStringArray);
+  return binaryStringRepresentation(encodedStringArray, options);
 };
 
 /**
@@ -58,14 +59,26 @@ const addDelimiter = (fileContent: Uint8Array): Uint8Array => {
  * @param { Uint8Array } typedArray
  * @returns
  */
-const binaryStringRepresentation = (typedArray: Uint8Array): string => {
+const binaryStringRepresentation = (typedArray: Uint8Array, options:cliOptions): string => {
   let storageString = "";
   
   typedArray.forEach((item:number) => 
   {
-    storageString += item.toString(2).padStart(8, "0") + " "
+    storageString += item.toString(2).padStart(8, "0") + " ";
   });
 
+  if (options.convertToBinaryOutputStringFile)
+  {
+    const streamWriter = options.outputLocation 
+      ? createWriteStream(`${options.outputLocation}generatedBinary.txt`)
+      : createWriteStream("generatedBinary.txt");
+
+    for (const item of storageString)
+    {
+      streamWriter.write(item.trim());
+    }
+  } 
+  
   return storageString;
 };
 

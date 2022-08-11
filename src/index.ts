@@ -10,8 +10,8 @@ const argumentsObject:cliArguments = createCLIArgumentsObject(process.argv[3], p
 try 
 {
   const file: Promise<string> = fs.readFile(fileName, { encoding: "utf-8" });
-  const stringFromFile = await file;
-  const formattedArguments = argumentProcessor(argumentsObject)
+  const stringFromFile:string = await file;
+  const formattedArguments:string = argumentProcessor(argumentsObject)
   const options: cliOptions = commandLineOptions(formattedArguments);
   const commandCenter = CentralCommand.GetInstance(options);
 
