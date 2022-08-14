@@ -1,4 +1,3 @@
-import { mkdir } from "fs/promises";
 import { cliOptions } from "./commandLineOptions.js";
 import * as utils from "./conversionUtils.js";
 
@@ -39,7 +38,8 @@ export default class CentralCommand
    * @description The CentralCommand objects current settings.
    * @returns { cliOptions } - The field that stores the cliOptions settings.
    */
-  public CurrentOptions = (): cliOptions => this.CommandOptions;
+  public CurrentOptions = (): cliOptions => 
+    this.CommandOptions;
 
   /**
    * @description Processes the desired value conversion and outputs the value.
@@ -56,8 +56,7 @@ export default class CentralCommand
     }
     else if (this.CommandOptions.convertToBinaryOutputStringFile)
     {
-      mkdir("./build/convertedValues");
-      utils.convertToBinaryString(fileContent, this.CommandOptions);
+      console.log(utils.convertToBinaryString(fileContent, this.CommandOptions));
     }
     else
     {

@@ -1,5 +1,6 @@
 import { cliOptions } from "./commandLineOptions.js";
 import { createWriteStream } from "fs";
+import { mkdir } from "fs/promises";
 
 /**
  * @Description Converts string from a file into a base64 string representation.
@@ -21,15 +22,14 @@ const convertToBase64 = (fileContent: string, options: cliOptions): string => {
  * @param { cliOptions } options - contains settings from CLI for converting values.
  * @returns - A string representation of binary content from Uint8Array.
  */
-const convertToBinaryString = (
-  fileContent: string,
-  options: cliOptions
-): string => {
+const convertToBinaryString = (fileContent: string,
+  options: cliOptions): string => {
   const encoder = new TextEncoder();
   const encodedStringArray = encoder.encode(fileContent.trim());
 
   if (options.addDelimiter) {
     const delimitedArray = addDelimiter(encodedStringArray);
+
     return binaryStringRepresentation(delimitedArray, options);
   }
 
@@ -43,9 +43,7 @@ const convertToBinaryString = (
  */
 const addDelimiter = (fileContent: Uint8Array): Uint8Array => {
   const byteUint8Array: Uint8Array = new Uint8Array(new ArrayBuffer(1));
-  const appendedBuffer = new ArrayBuffer(
-    fileContent.length + byteUint8Array.length
-  );
+  const appendedBuffer = new ArrayBuffer(fileContent.length + byteUint8Array.length);
   const appendedTypedArray = new Uint8Array(appendedBuffer);
 
   appendedTypedArray.set(fileContent, 0);
@@ -57,34 +55,72 @@ const addDelimiter = (fileContent: Uint8Array): Uint8Array => {
 /**
  * @description converts Uint8Array binary into a string representation.
  * @param { Uint8Array } typedArray
- * @returns
+ * @returns String representation of Uint8Array values.
  */
-const binaryStringRepresentation = (typedArray: Uint8Array, options:cliOptions): string => {
-  let storageString = "";
-  
-  typedArray.forEach((item:number) => 
-  {
-    storageString += item.toString(2).padStart(8, "0") + " ";
-  });
+const binaryStringRepresentation = (typedArray: Uint8Array,
+  options: cliOptions): string => {
+  const storageString: string = binaryStingRepresentationFormatter(typedArray,
+    options);
 
-  if (options.convertToBinaryOutputStringFile)
+  if (options.convertToBinaryOutputStringFile && options.outputLocation !== null) 
   {
-    const streamWriter = options.outputLocation 
-      ? createWriteStream(`${options.outputLocation}generatedBinary.txt`)
+    const url: string = options.outputLocation;
+    mkdir(`${url}`).then(() => console.log("Folder Created:"));
+
+    const streamWriter = url
+      ? createWriteStream(`${url}generatedBinary.txt`)
       : createWriteStream("generatedBinary.txt");
 
-    for (const item of storageString)
-    {
+    for (const item of storageString) {
       streamWriter.write(item.trim());
     }
-  } 
-  
+  }
+
   return storageString;
 };
 
 const convertBinaryStringToUint8 = (binaryInput: string): Uint8Array =>
-{
-  return new TextEncoder().encode(binaryInput);
-}
+  new TextEncoder().encode(binaryInput);
 
+/**
+ * @descriptions Binary string representation format.
+ * @param { Uint8Array } inputArray - Typed Array values to convert.
+ * @param { cliOptions }options - options object.
+ * @returns Formatted binary string.
+*/
+const binaryStingRepresentationFormatter = (inputArray: Uint8Array,
+  options: cliOptions): string => {
+  let storageString = "";
+
+  if (options.addDelimiter !== true) 
+  {
+    inputArray.forEach((item: number) => {
+      storageString += item.toString(2).padStart(8, "0") + " ";
+    });
+  }
+  else if (options.addDelimiter === true)
+  {
+    inputArray.forEach((item: number) => {
+      storageString += item.toString(2);
+    });
+  }
+  return storageString;
+};
+
+/**
+ * @description Removes Delimiter byte from binary string representation.
+ * @param { string } binaryString - string representation of binary input. 
+ * @param { cliOptions } options - options object.
+ * @returns - Delimiter removed from binary string representation.
+ */
+const removeDelimiterFromBinaryRepresentation = (binaryString: string, options: cliOptions): string => {
+  let decodedString: string = "";
+
+  if (options.addDelimiter) {
+    decodedString = [...binaryString]
+      .filter((character: string) => character !== "10011001")
+      .join("");
+  }
+  return decodedString;
+};
 export { convertToBase64, convertToBinaryString, convertBinaryStringToUint8 };
