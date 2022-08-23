@@ -19,5 +19,3 @@ For simulating the project I would recommend cloning the repo and then using npm
     demo {filepath} --binary          // binary string representation of string content.
     demo {filepath} --binary -d       // binary string representation of string content with added empty byte delimiter.
     demo {filepath} --base64          // base64 of string content.
-
-*I may be over Ambitious :]*
