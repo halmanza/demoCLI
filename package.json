@@ -20,6 +20,9 @@
     "demo": "./build/index.js && npx eslint **/*.js --ignore-pattern node_modules/ --fix"
   },
   "scripts": {
-    "lint": "npx eslint **/*.ts --ignore-pattern node_modules/ --fix"
+    "debug": "npm install && npx tsc --watch && npm run lint:fix",
+    "install": "npx tsc --build",
+    "lint:fix":"npm run lint -- --fix",
+    "lint": "npx eslint **/*.ts **/*.js --ignore-pattern node_modules/"
   }
 }

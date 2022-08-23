@@ -28,7 +28,6 @@
             "asyncArrow": "always",
             "named": "always"
         }],
-        // "object-curly-newline":["error",{"multiline": false}],
         "no-multi-spaces":["error",{"ignoreEOLComments": false}],
         "padded-blocks":"off",
         "no-void":"off",
