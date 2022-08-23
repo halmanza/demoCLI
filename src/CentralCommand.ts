@@ -38,7 +38,8 @@ export default class CentralCommand
    * @description The CentralCommand objects current settings.
    * @returns { cliOptions } - The field that stores the cliOptions settings.
    */
-  public CurrentOptions = (): cliOptions => this.CommandOptions;
+  public CurrentOptions = (): cliOptions => 
+    this.CommandOptions;
 
   /**
    * @description Processes the desired value conversion and outputs the value.
@@ -50,6 +51,10 @@ export default class CentralCommand
     {
       console.log(utils.convertToBase64(fileContent, this.CommandOptions));
     } else if (this.CommandOptions.convertToBinary) 
+    {
+      console.log(utils.convertToBinaryString(fileContent, this.CommandOptions));
+    }
+    else if (this.CommandOptions.convertToBinaryOutputStringFile)
     {
       console.log(utils.convertToBinaryString(fileContent, this.CommandOptions));
     }

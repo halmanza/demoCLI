@@ -28,10 +28,12 @@
             "asyncArrow": "always",
             "named": "always"
         }],
-        "object-curly-newline":["error",{"multiline": true}],
+        // "object-curly-newline":["error",{"multiline": false}],
         "no-multi-spaces":["error",{"ignoreEOLComments": false}],
         "padded-blocks":"off",
         "no-void":"off",
+        "function-paren-newline": ["error", "never"],
+        "arrow-body-style": ["error", "as-needed"],
         "comma-dangle": ["error", {
         "arrays": "never",
         "objects": "never",

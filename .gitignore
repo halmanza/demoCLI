@@ -15,3 +15,6 @@ npm-debug.log*
 .env
 .DS_Store
 Thumbs.db
+
+#testfiles
+*.txt
